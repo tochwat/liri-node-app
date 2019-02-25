@@ -2,7 +2,7 @@ var axios = require("axios");
 require('dotenv').config();
 var Spotify = require('node-spotify-api');
 var moment = require('moment');
-
+var fs = require("fs");
 
 //verify the .env is working
 // console.log(process.env);
@@ -24,7 +24,8 @@ for (var i=3; i<nodeArgs.length; i++) {
 }
 
 
-if (command === "spotify-this-song") {
+var runCommand = function () {
+  if (command === "spotify-this-song") {
     if (media === "") {
       media = "the sign ace of base";
     }
@@ -41,37 +42,57 @@ if (command === "spotify-this-song") {
     console.log("Album: " + data.tracks.items[0].album.name); 
 
     });
-} else if (command === "movie-this") {
-  if (media === "") {
-    media = "Mr. Nobody";
+  } else if (command === "movie-this") {
+    if (media === "") {
+      media = "Mr. Nobody";
+    }
+    var queryUrl = "http://www.omdbapi.com/?t=" + media + "&y=&plot=short&apikey=trilogy";
+
+    axios.get(queryUrl).then(
+      function(response) {
+        console.log("Title: " + response.data.Title);
+        console.log("Release Year: " + response.data.Year);
+        console.log("IMDB Rating: " + response.data.Ratings[0].Value);
+        console.log("Rotten Tomatoes Rating: " + response.data.Ratings[1].Value);
+        console.log("Country Produced: " + response.data.Country);
+        console.log("Language: " + response.data.Language);
+        console.log("Plot: " + response.data.Plot);
+        console.log("Actors: " + response.data.Actors);
+        // console.log(response.data);
+      }
+    );
+  } else if (command === "concert-this") {
+    var queryUrl = "https://rest.bandsintown.com/artists/" + media + "/events?app_id=codingbootcamp";
+
+    axios.get(queryUrl).then(
+      function(response) {
+
+        var eventTime = response.data[0].datetime;
+
+        console.log("Venue: " + response.data[0].venue.name);
+        console.log("Venue Location: " + response.data[0].venue.city);
+        console.log("Date of Event: " + moment(eventTime).format("MM/DD/YYYY"));
+        // console.log(response.data[0]);
+      }
+    );
+  } else if (command === "do-what-it-says") {
+
+    fs.readFile("random.txt", "utf8", function(error, data) {
+      if (error) {
+        return console.log(error);
+      }
+    
+      var dataArr = data.split(",");
+      // console.log(dataArr);
+    
+      command = dataArr[0];
+      media = dataArr[1];
+      runCommand();
+    });
+
   }
-  var queryUrl = "http://www.omdbapi.com/?t=" + media + "&y=&plot=short&apikey=trilogy";
 
-  axios.get(queryUrl).then(
-    function(response) {
-      console.log("Title: " + response.data.Title);
-      console.log("Release Year: " + response.data.Year);
-      console.log("IMDB Rating: " + response.data.Ratings[0].Value);
-      console.log("Rotten Tomatoes Rating: " + response.data.Ratings[1].Value);
-      console.log("Country Produced: " + response.data.Country);
-      console.log("Language: " + response.data.Language);
-      console.log("Plot: " + response.data.Plot);
-      console.log("Actors: " + response.data.Actors);
-      // console.log(response.data);
-    }
-  );
-} else if (command === "concert-this") {
-  var queryUrl = "https://rest.bandsintown.com/artists/" + media + "/events?app_id=codingbootcamp";
-
-  axios.get(queryUrl).then(
-    function(response) {
-
-      var eventTime = response.data[0].datetime;
-
-      console.log("Venue: " + response.data[0].venue.name);
-      console.log("Venue Location: " + response.data[0].venue.city);
-      console.log("Date of Event: " + moment(eventTime).format("MM/DD/YYYY"));
-      // console.log(response.data[0]);
-    }
-  );
 }
+
+
+runCommand();
