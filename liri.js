@@ -1,6 +1,8 @@
 var axios = require("axios");
 require('dotenv').config();
 var Spotify = require('node-spotify-api');
+var moment = require('moment');
+
 
 //verify the .env is working
 // console.log(process.env);
@@ -40,6 +42,9 @@ if (command === "spotify-this-song") {
 
     });
 } else if (command === "movie-this") {
+  if (media === "") {
+    media = "Mr. Nobody";
+  }
   var queryUrl = "http://www.omdbapi.com/?t=" + media + "&y=&plot=short&apikey=trilogy";
 
   axios.get(queryUrl).then(
@@ -53,6 +58,20 @@ if (command === "spotify-this-song") {
       console.log("Plot: " + response.data.Plot);
       console.log("Actors: " + response.data.Actors);
       // console.log(response.data);
+    }
+  );
+} else if (command === "concert-this") {
+  var queryUrl = "https://rest.bandsintown.com/artists/" + media + "/events?app_id=codingbootcamp";
+
+  axios.get(queryUrl).then(
+    function(response) {
+
+      var eventTime = response.data[0].datetime;
+
+      console.log("Venue: " + response.data[0].venue.name);
+      console.log("Venue Location: " + response.data[0].venue.city);
+      console.log("Date of Event: " + moment(eventTime).format("MM/DD/YYYY"));
+      // console.log(response.data[0]);
     }
   );
 }
