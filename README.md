@@ -20,6 +20,8 @@ LIRI will be a command line node app that takes in parameters and gives you back
 
 2. `node liri.js spotify-this-song '<song name here>'`
 
+    ![Spotify this gif](/gifs/spotifythis.gif)
+
    * This will show the following information about the song in your terminal/bash window
 
      * Artist(s)
@@ -33,6 +35,8 @@ LIRI will be a command line node app that takes in parameters and gives you back
    * If no song is provided then your program will default to "The Sign" by Ace of Base.
 
 3. `node liri.js movie-this '<movie name here>'`
+
+    ![Movie this gif](/gifs/moviethis.gif)
 
    * This will output the following information to your terminal/bash window:
 
@@ -50,6 +54,8 @@ LIRI will be a command line node app that takes in parameters and gives you back
    * If the user doesn't type a movie in, the program will output data for the movie 'Mr. Nobody.'
 
 4. `node liri.js do-what-it-says`
+
+    ![Do-what-it-says gif](/gifs/whatitsays.gif)
 
    * Using the `fs` Node package, LIRI will take the text inside of random.txt and then use it to call one of LIRI's commands.
 
