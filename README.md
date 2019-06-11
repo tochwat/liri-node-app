@@ -61,3 +61,11 @@ LIRI will be a command line node app that takes in parameters and gives you back
 
      * It should run `spotify-this-song` for "I Want it That Way," as follows the text in `random.txt`.
 
+
+### Running the App
+
+* Clone the repo
+
+* Install NPM packages
+
+* Run liri.js in your command line
