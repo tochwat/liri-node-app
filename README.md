@@ -2,9 +2,9 @@
 
 ### Overview
 
-LIRI will be a command line node app that takes in parameters and gives you back data. It takes in 4 commands as described below.
+LIRI is a command line node app that takes in parameters and gives back data on music and concerts. It takes in 4 commands as described below.
 
-### What Each Command Should Do
+### Commands
 
 1. `node liri.js concert-this <artist/band name here>`
 
@@ -51,7 +51,7 @@ LIRI will be a command line node app that takes in parameters and gives you back
        * Actors in the movie.
      ```
 
-   * If the user doesn't type a movie in, the program will output data for the movie 'Mr. Nobody.'
+   * If you don't type a movie in, the program will output data for the movie 'Mr. Nobody.'
 
 4. `node liri.js do-what-it-says`
 
